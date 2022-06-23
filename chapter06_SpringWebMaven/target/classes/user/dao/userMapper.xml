@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userSQL">
+ 	
+	<resultMap type="dto" id="userResult"> <!-- UserDTO class와 강제 mapping하겠다. -->
+		<result property = "name" column="NAME"/> <!-- 지금은 이름이 같지만, 이름이 같지 않을 경우 이렇게 짝을 지어서 넣어주면 된다.라고 설정해두는 것이죠. -->
+		<result property = "id" column="ID"/> 
+		<result property = "pwd" column="PWD"/> 
+	</resultMap>
+	
+	<!-- 특정 tag의 아이디는 다른 mapper file이라도  않도록 설정해야한다. myBatis에는 등록된 모든 mapper가 올라가기 때문에 id가 같다면 충돌이 일어날 수 있다. --> 
+	<insert id="write" parameterType="dto">
+		insert into usertable values(#{name},#{id},#{pwd}) <!-- dto에서 name이랑 id, pwd 찾아서 매핑해서 insert 하는거겠죠 -->
+	</insert> <!-- insert가 sql에서의 insert의 의미일까 아니면, xml에 추가시킨다는 의미의 insert일까? -->
+	
+	
+	<delete id="delete" parameterType="dto">
+		delete from usertable where id = #{id}
+	</delete>
+	
+	<!-- 수업코드 수업코드 수업코드 
+	 <delete id="delete" parameterType="java.lang.String">
+		delete from usertable where id = #{id}
+	</delete>
+	 -->
+	 
+	 <select id="getUserList" resultType ="dto"> <!-- resultMap의 id로 userResult를 설정해두었는데 이대로 하면된다. 라는 뜻으로 resultMap 의 속성을 더해준다.  -->
+	 	select * from usertable
+	 </select>
+	 <!-- table의 모든 table을 가져오는 것이기 때문에, parameter가 필요가 없고. 결과 처리만 해주면된다. -->
+	 <!-- service class 파일에서 dto로 꺼낼거니깐 변수 맵핑을 베이스로 dto에 잘담아줘라 --> 
+	
+	<select id="getUserOne" parameterType = "java.lang.String" resultType="dto">
+		select * from usertable where id = #{id}
+	</select>
+	
+	<update id="updateUser" parameterType="java.util.Map">
+		update usertable set name=#{name}, pwd=#{pwd} where id = #{id}
+	</update>
+	
+	 <select id="searchAll" parameterType="java.util.Map" resultType ="dto"> <!-- resultMap의 id로 userResult를 설정해두었는데 이대로 하면된다. 라는 뜻으로 resultMap 의 속성을 더해준다.  -->
+		select * from usertable where id like #{id} and name like #{name}
+	 	<!-- select * from member WHERE id like (CASE nvl(#{id},'null') WHEN 'null' THEN '%' ELSE #{id} END) AND name like (CASE nvl(#{name},'null') WHEN 'null' THEN '%' ELSE #{name} END); --> 
+	 </select>	
+	 
+	 <!-- 
+	 WAY1)
+	 select * from usertable where 
+	 <if test = "columnName == 'name'">
+	 	name like '%'||#{value}||'%'
+	 </if>
+	 <if test = "columnName == 'id'">
+	 	id like '%'||#{value}||'%'
+	 </if>
+	 이런식으로 jstl과 유사하다.
+	 
+	 WAY2)
+	 <choose>
+	 	<when test = "columnName == 'name'">
+	 		~
+	 	</when>
+	 	
+	 	<otherwise>
+	 		~~
+	 	</otherwise>
+	 </choose> 
+	 
+	 WYA3)
+	 SELECT * FROM USERTABLEWHERE ${COLUMNAME} LIKE '%'||#{value}||'%'
+	 -->
+	 
+
+</mapper>
