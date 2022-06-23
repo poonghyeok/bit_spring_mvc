@@ -1,9 +1,11 @@
 package com.bean;
 
+import lombok.Getter;
 import lombok.Setter;
 
 public class SumDTO {
 	@Setter
-	private int x,y;
+	@Getter
+	private int x,y;	
 	
 }
