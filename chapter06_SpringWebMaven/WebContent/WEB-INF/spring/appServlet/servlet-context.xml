@@ -14,9 +14,13 @@
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 	
-	<bean id="multiPartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="50000000"></property> <!-- byte기준 50mb 한정 -->
-	</bean>
+    </bean>
+	
+	<!-- <bean id="uploadTempDir" class="org.springframework.core.io.FileSystemResource">
+		 <constructor-arg value="C:\\Spring\\workspace\\chapter06_SpringWebMaven\\WebContent\\storage"/>
+	</bean> -->
 	
 	<!-- <bean id="userController" class="com.controller.UserController"></bean> -->
 	<context:component-scan base-package="com.controller" /> 

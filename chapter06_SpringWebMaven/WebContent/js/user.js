@@ -2,6 +2,7 @@
  * 
  */
 $('#writeButton').click(function(){
+	$('#writeForm').sumbit();
 	alert("write button clicked..!");
 	$('#nameDiv').empty();
 	$('#idDiv').empty();
@@ -24,9 +25,9 @@ $('#writeButton').click(function(){
 		$.ajax({
 			type : 'post',
 			url : '/chapter06_SpringWebMaven/user/write',
-			data : $('#writeForm').serialize(),
-			success : function(){
-				alert('회원가입을 축하합니다..!'); 
+			data : {id : $('#id').val()},
+			success : function(data){
+				alert('회원가입을 축하합니다..!');
 				location.href = "/chapter06_SpringWebMaven/user/list";
 			},
 			error : function(err){
