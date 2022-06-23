@@ -1,6 +1,7 @@
 package user.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,5 +47,25 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 	
+	@Override
+	public UserDTO getUserById(String id) {
+		UserDTO dto = userDAO.getUserById(id);
+		
+		return dto;
+	}
+	
+	@Override
+	public void updateUser(Map<String, String> map) {
+		System.out.println("serviceImpl update호출 !");
+		userDAO.updateUser(map);
+		
+		return;
+	}
+	
+	@Override
+	public void deleteUserById(String id) {
+		System.out.println("\n serviceImpl delete 호출 !");
+		userDAO.deleteUserById(id);
+	}
 	
 }

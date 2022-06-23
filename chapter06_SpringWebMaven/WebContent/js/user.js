@@ -28,18 +28,6 @@ $('#writeButton').click(function(){
 			success : function(){
 				alert('회원가입을 축하합니다..!'); 
 				location.href = "/chapter06_SpringWebMaven/user/list";
-			/*	$.ajax({
-					type : 'get',
-					url : '/chapter06_SpringWebMaven/user/list',
-					dataType : 'json', 
-					success : function(data){
-						console.log('ajax2 진입!');
-						document.write(jsonToPage(data));
-					},
-					error : function(err1){
-						console.log(err1);
-					}
-				})*/
 			},
 			error : function(err){
 				console.log(err)
@@ -48,22 +36,6 @@ $('#writeButton').click(function(){
 	}
 })
 
-/*function jsonToPage(data){
-	var page = '<html><head><meta charset="UTF-8"></head><body>';
-	page += '<table>';
-	for(var i = 0; i < data.length; i++){
-		page += '<tr>';
-		page += ('<td>'+data[i].name+'</td>');
-		page += ('<td>'+data[i].id+'</td>');
-		page += ('<td>'+data[i].pwd+'</td>');
-		page += '</tr>';
-	}
-	
-	page += '</table></body></html>';
-		
-	return page;
-}
-*/
 
 $('#imgRoot').click(function(){
 	location.href = "/chapter06_SpringWebMaven";

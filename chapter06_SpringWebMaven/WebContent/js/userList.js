@@ -1,6 +1,7 @@
 /**
  * 
  */
+/*try2 confirm*/
 $(function(){
 	$.ajax({
 		type : 'get',
@@ -31,6 +32,7 @@ $(function(){
 	})
 })
 
+/*try1*/
 function jsonToPage(data){
 	var page = '<html><head><meta charset="UTF-8"></head><body>';
 	page += '<table>';
@@ -42,3 +44,7 @@ function jsonToPage(data){
 		page += '</tr>';
 	}
 }
+
+$('#imgRoot').click(function(){
+	location.href = "/chapter06_SpringWebMaven";
+})

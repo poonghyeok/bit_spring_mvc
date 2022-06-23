@@ -38,13 +38,19 @@ public class UserDAOMyBatis implements UserDAO {
 	
 	@Override
 	public void deleteUserById(String deleteId) {
+		System.out.println("myBatis delete 호출! " + deleteId);
+		
 		sqlSession.delete("userSQL.delete",deleteId);
 	}
 	
 	
 	@Override
 	public void updateUser(Map<String, String> map) {
+		System.out.println("\n mybatis update 호출!" + map.get("id")+ map.get("name")+ map.get("pwd"));
+		
 		sqlSession.update("userSQL.updateUser", map);
+		
+		
 	}
 	
 	

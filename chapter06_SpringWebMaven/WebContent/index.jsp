@@ -13,8 +13,9 @@
 <h3>
 	<p><a href="/chapter06_SpringWebMaven/user/writeForm">입력</a>
 	<p><a href="/chapter06_SpringWebMaven/user/list">출력</a>
-	<p><a href="">수정</a>
-	<p><a href="">삭제</a>
+	<p><a href="/chapter06_SpringWebMaven/user/updateForm">수정</a>
+	<p><a href="/chapter06_SpringWebMaven/user/deleteForm">삭제</a>
+	<p><a href="/chapter06_SpringWebMaven/user/uploadForm">업로드</a>
 </h3>
 
 </body>
