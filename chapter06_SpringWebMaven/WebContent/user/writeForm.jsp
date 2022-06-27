@@ -22,6 +22,7 @@
 			<div id="pwdDiv"></div>
 			
 			<input type="button" value="회원가입" id="writeButton">
+			<input type="submit" value="제출">
 			<input type="reset" value="다시작성" >
 	</fieldset>
 </form>

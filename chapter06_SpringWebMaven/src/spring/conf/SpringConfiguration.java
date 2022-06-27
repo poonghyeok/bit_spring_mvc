@@ -13,7 +13,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@PropertySource("classpath:spring/db.properties")
+@PropertySource("classpath:oracleMyBatis/db.properties")
 @EnableTransactionManagement
 public class SpringConfiguration {
 	 @Value("${jdbc.driver}") 
@@ -43,7 +43,7 @@ public class SpringConfiguration {
 	 public SqlSessionFactory  sqlSessionFactory() throws Exception{
 		 SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		
-		 sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("spring/mybatis-config.xml"));
+		 sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("oracleMyBatis/mybatis-config.xml"));
 		 //calsspath를 넣어줘야하는 string을 넣으면 error가 발생함 객체가 들어오기로 되었기 떄문에
 		 //적당한 객체를 사용한다. 
 		 sqlSessionFactoryBean.setDataSource(this.dataSource());

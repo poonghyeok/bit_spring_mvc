@@ -24,10 +24,11 @@
 	
 	<!-- <bean id="userController" class="com.controller.UserController"></bean> -->
 	<context:component-scan base-package="com.controller" /> 
-
+ 
 	<!-- Spring Web MVC를 하기 위해 설정해야하는 값들을 자동으로 추가해준다. -->
 	<mvc:annotation-driven />
 	<mvc:resources location="/js/" mapping="/js/**"/>
 	<mvc:resources location="/img/" mapping="/img/**"/>
+	<mvc:resources location="/storage/" mapping="/storage/**"/>
 	
 </beans>

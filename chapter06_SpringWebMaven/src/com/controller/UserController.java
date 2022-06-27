@@ -1,20 +1,21 @@
 package com.controller;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -72,7 +73,7 @@ public class UserController {
 	public String updateForm() {
 		
 		return "/user/updateForm";
-	}
+	}	
 	
 	@PostMapping(value = "/user/updateUser")
 	@ResponseBody
@@ -103,23 +104,103 @@ public class UserController {
 		return "/user/uploadForm";
 	}
 	
-	@PostMapping(value = "/user/upload")
-	@ResponseBody
-	public void upload(@RequestParam MultipartFile img) {
+	//input file로 들어오는 img가 하나인 경우
+//	@PostMapping(value = "/user/upload")
+//	@ResponseBody
+//	public String upload(@RequestParam MultipartFile img, HttpSession session) {
+//		
+////		String filePath = "C:\\Spring\\workspace\\chapter06_SpringWebMaven\\WebContent\\storage";
+////		String fileName = img.getOriginalFilename();
+////		System.out.println("fileName : " + fileName);
+////		
+////		File file = new File(filePath, fileName);
+////		
+////		try {
+////			//FileCopyUtils.copy(img.getInputStream(), new FileOutputStream(file));
+////			img.transferTo(file);
+////		} catch (IOException e) {
+////			e.printStackTrace();	
+////		}
+//		
+//	//실제 폴더의 위치로 올라가고 싶다. way2.
+//	String filePath = session.getServletContext().getRealPath("/storage");
+//	System.out.println("실제 폴더 : " + filePath);
+//	String fileName = img.getOriginalFilename();
+//	
+//	File file = new File(filePath, fileName);
+//	
+//	try {                                                                       
+//		//FileCopyUtils.copy(img.getInputStream(), new FileOutputStream(file)); 
+//		img.transferTo(file);                                                   
+//	} catch (IOException e) {                                                   
+//		e.printStackTrace();	                                                
+//	}                                                                           
+//		
+//		return "<img src='../storage/"+ fileName +"' width='200' height='200'>";
+//		//fileName은 16진수의 임의의 이름 아니야?
+//	}
+	
+//	//input file 로 들어오는 img라는 name을 가진 요소가 두개 이상인 경우ㅡ
+//	@PostMapping(value = "/user/upload")                                         
+//	@ResponseBody                                                                
+//	public String upload(@RequestParam MultipartFile[] img, HttpSession session) { 
+//		String filePath = session.getServletContext().getRealPath("/storage");
+//		String[] fileName = new String[2];
+//		File file;
+//		
+//		if(img[0] != null) {
+//			fileName[0] = img[0].getOriginalFilename(); //파일명을 구분하기 위해, 뒤에 시간을 붙여주는것도 방법이다. 
+//			file = new File(filePath, fileName[0]);
+//			try {
+//				img[0].transferTo(file);
+//			} catch (IllegalStateException | IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		if(img[1] != null) {
+//			fileName[1] = img[1].getOriginalFilename(); //파일명을 구분하기 위해, 뒤에 시간을 붙여주는것도 방법이다. 
+//			file = new File(filePath, fileName[1]);
+//			
+//			try {
+//				img[1].transferTo(file);
+//			} catch (IllegalStateException | IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		return "<img src='../storage/"+ fileName[0] +"' width='200' height='200'>"
+//				+ "<img src='../storage/"+ fileName[1] +"' width='200' height='200'>";
+//		
+//	}
+	
+	@PostMapping(value = "/user/upload")                                          
+	@ResponseBody                                                                 
+	public String upload(@RequestParam("img[]") List<MultipartFile> files, HttpSession session) {
+		System.out.println("list upload 컨트롤러 실행");
+		StringBuffer sb = new StringBuffer();
+		String filePath = session.getServletContext().getRealPath("/storage");
+		int imgNum = files.size();
+		System.out.println("\n img 개수 : " + imgNum);
+		String[] fileName = new String[imgNum];
+		File file;
 		
-		String filePath = "C:\\Spring\\workspace\\chapter06_SpringWebMaven\\WebContent\\storage";
-		String fileName = img.getOriginalFilename();
-		
-		File file = new File(filePath, fileName);
-		
-		try {
-			FileCopyUtils.copy(img.getInputStream(), new FileOutputStream(file));
-			//img.transferTo(file);
-		} catch (IOException e) {
-			e.printStackTrace();	
+		int i = 0;
+		for(MultipartFile img : files) {
+			fileName[i] = img.getOriginalFilename();
+			file = new File(filePath, fileName[i]);
+			
+			try {
+				img.transferTo(file);
+				
+				sb.append("<img src='../storage/"+ fileName[i] +"' width='200' height='200'>");
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			i++;
 		}
-		
-		return ;
+			
+		return sb.toString();
 	}
 	
 }
